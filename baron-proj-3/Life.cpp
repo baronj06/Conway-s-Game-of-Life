@@ -31,7 +31,7 @@ int Life::livingNeighbors(int row, int col) const{
 			}
 		}
 	}
-	if(safeCellValueAt(row,col)){ // DJH: -0 The unsafe getter works here
+	if(safeCellValueAt(row,col)){ 
 		-- count;
 	}
 
@@ -40,7 +40,7 @@ int Life::livingNeighbors(int row, int col) const{
 
 
 Life::Life(ifstream &ifs){
-	// DJH: Constructors usually attempt to assign a value for every member variable in the class.  Does this constructor do that?
+	
 
 	int row = 0,col = 0;
 	string line;
@@ -48,14 +48,11 @@ Life::Life(ifstream &ifs){
 	ifs >> row >> col;
 
 
-	// DJH: -1 Do you see a way to avoid the previous two lines of code?
-	// BC (FIXED): I delete two lines and chaged it to call createCells(row,col,nullptr). 
+
 	createCells(row,col,nullptr);
 
 	getline(ifs,line);
 
-	// DJH: this initializes line from the input stream, but what does it do with line?
-	// DJH: this reads only one line from the file.
 
 	for(int i = 0; i < row; i ++){
 		getline(ifs,line);
@@ -105,8 +102,7 @@ bool Life::cellValueAt(int row, int col) const{
 	return _cells[row * _colCount + col];
 }
 
-// DJH: -2 Early returns.
-// BC (FIXED): I made other variable and return at end of code.
+
 bool Life::safeCellValueAt(int row, int col) const{
 	bool result = false;
 	if(row >= 0 && row < _rowCount && col >= 0 && col < _colCount){
@@ -140,9 +136,6 @@ int Life::draw(ConsoleGrid *grid) const{
 
 Life Life::nextLife() const{
 	Life next(_rowCount,_colCount);
-	// DJH: -2 We can avoid a few lines in this method by noticing
-	// that the constructor properly initializes _cells to all false
-	// BC (FIXED): Removed unnecessary false-assignments.
 
 	for(int i = 0; i < _rowCount; i++){
 		for(int j = 0; j < _colCount; j++){
@@ -163,12 +156,6 @@ Life Life::nextLife() const{
 	
 }
 
-// DJH: 95/100. Well done, Baron! 
-// Eligible for fix
-
-// DJH: Fails to run on any input -60. I will deduct -5 instead
-// DJH: No "fix" comments found
-// Revised to 90/100
 
 /*
 | 지시문 표현                                                                    | 우리가 코드에서 해야 할 것                                                                              |
